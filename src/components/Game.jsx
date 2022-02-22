@@ -8,9 +8,10 @@ class Game extends Component {
         super(props);
 
         this.state = {
+            boardSize: 3,
             stepNumber: 0,
             history: [{
-                squares: Array(9).fill(null),
+                squares: Array(3 * 3).fill(null),
             }],
             xIsNext: true,
         }
@@ -68,7 +69,8 @@ class Game extends Component {
         return (
         <div className="game">
             <div className="game-board">
-                <Board 
+                <Board
+                    boardSize ={ this.state.boardSize } 
                     squares={ current.squares }
                     onClick={ (i) => this.handleClick(i) }
                 />

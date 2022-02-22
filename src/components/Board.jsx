@@ -1,62 +1,44 @@
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import React from "react";
 import Square from "./Square";
 
 
-function Board({ squares, onClick }) {
+function Board({ boardSize, squares, onClick }) {
 
-    const renderSquare = useCallback((i) => {
+    const renderSquare = (index) => {
+
         return (
             <Square
-                key={i} 
-                value={ squares[i] }
-                onClick={ () => onClick(i) }                    
+                key={ index } 
+                value={ squares[index] }
+                onClick={ () => onClick(index) }                    
             />
-        );
-    }, []);
-
-    const renderRow = (num) => {
-        return (
-            <div className="board-row">
-                {/* {renderColumns(num)} */}
-            </div>
         );
     };
 
-    // const renderColumns
+    const renderColumns = (index) => {
+        const colList = [];
 
-    const renderBoard = useMemo(() => {
-        console.log(squares);
-        return (
-            squares.map( (value, index) => {
-                if ((index + 1) % 3 === 0 || index === 0) {
-                    console.log(index);
-                    return <div className="board-row">{renderSquare(index)}</div>
-                }
-                return renderSquare(index)
+        for (let col = 0; col < boardSize; col++) {
+            const squareIndex = col + index * boardSize;
+            colList.push(renderSquare(squareIndex));
+        }
 
-            })
-        );
-    }, [squares]);
+        return colList.map((col) => col);
+    };
+
+    const renderBoard = () => {
+        const rowList = [];
+
+        for (let row = 0; row < boardSize; row++) {
+            rowList.push(<div className="board-row">{renderColumns(row)}</div>);
+        }
+
+        return rowList.map((row) => row);
+    };
     
-
     return (
         <div>
-            {renderBoard}
-            {/* <div className="board-row">
-                {renderSquare(0)}
-                {renderSquare(1)}
-                {renderSquare(2)}
-            </div>
-            <div className="board-row">
-                {renderSquare(3)}
-                {renderSquare(4)}
-                {renderSquare(5)}
-            </div>
-            <div className="board-row">
-                {renderSquare(6)}
-                {renderSquare(7)}
-                {renderSquare(8)}
-            </div> */}
+            {renderBoard()}
         </div>
     );
 }
