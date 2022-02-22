@@ -2,35 +2,44 @@ import React from "react";
 import Square from "./Square";
 
 
-function Board({ squares, onClick }) {
+function Board({ boardSize, squares, onClick }) {
 
-    function renderSquare(i) {
+    const renderSquare = (index) => {
+
         return (
-            <Square 
-                value={ squares[i] }
-                onClick={ () => onClick(i) }                    
+            <Square
+                key={ index } 
+                value={ squares[index] }
+                onClick={ () => onClick(index) }                    
             />
         );
-    }
+    };
 
+    const renderColumns = (index) => {
+        const colList = [];
+
+        for (let col = 0; col < boardSize; col++) {
+            const squareIndex = col + index * boardSize;
+            colList.push(renderSquare(squareIndex));
+        }
+
+        return colList.map((col) => col);
+    };
+
+    const renderBoard = () => {
+        const rowList = [];
+
+        for (let row = 0; row < boardSize; row++) {
+            rowList.push(<div className="board-row">{renderColumns(row)}</div>);
+        }
+
+        return rowList.map((row) => row);
+    };
+    
     return (
-    <div>
-        <div className="board-row">
-            {renderSquare(0)}
-            {renderSquare(1)}
-            {renderSquare(2)}
+        <div>
+            {renderBoard()}
         </div>
-        <div className="board-row">
-            {renderSquare(3)}
-            {renderSquare(4)}
-            {renderSquare(5)}
-        </div>
-        <div className="board-row">
-            {renderSquare(6)}
-            {renderSquare(7)}
-            {renderSquare(8)}
-        </div>
-    </div>
     );
 }
 
