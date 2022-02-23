@@ -1,4 +1,5 @@
 import React from "react";
+// components
 import Square from "./Square";
 
 
@@ -37,7 +38,7 @@ function Board({ boardSize, squares, onClick }) {
     };
     
     return (
-        <div>
+        <div className="game-board">
             {renderBoard()}
         </div>
     );
