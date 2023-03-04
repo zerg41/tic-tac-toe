@@ -1,0 +1,167 @@
+@use 'sass:map';
+@use 'sass:math';
+@import './variables';
+@import './mixins';
+
+.Main {
+  &-Header {
+    @include page-wrapper;
+    height: $header-height;
+    padding-top: map.get($padding, 'sm'); // 10px
+    padding-bottom: map.get($padding, 'sm'); // 10px
+    background-color: map.get($colors, 'dark');
+    color: wheat;
+    text-align: center;
+  }
+
+  &-Content {
+    @include page-wrapper;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    background-color: map.get($colors, 'background');
+  }
+}
+
+$square-gap: 14px;
+$square-side-length: 100px;
+$square-inner-padding: map.get($padding, 'sm');
+$symbol-line-width: 6px;
+.Game {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 'GameBoard History';
+  column-gap: 60px;
+  margin-top: 60px;
+
+  .GameBoard {
+    grid-area: GameBoard;
+    justify-self: end;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+
+    .Board {
+      grid-area: Board;
+      display: grid;
+      align-content: start;
+      gap: $square-gap;
+
+      .Square {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        width: $square-side-length;
+        height: $square-side-length;
+        padding: $square-inner-padding;
+        background-color: rgba(255, 255, 255, 0.9);
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+          outline: 4px solid map.get($colors, 'primary');
+        }
+
+        &:active {
+          background-color: rgba(255, 255, 255, 0.95);
+        }
+
+        &_status_winner {
+          background-color: rgba(90, 236, 22, 0.438);
+        }
+
+        .Symbol {
+          position: relative;
+          box-sizing: border-box;
+          height: 100%;
+          width: 100%;
+        }
+
+        .Zero {
+          @extend .Symbol;
+          border-radius: 50%;
+          border: $symbol-line-width solid map.get($colors, 'dark');
+        }
+
+        .Cross {
+          @extend .Symbol;
+
+          &::after,
+          &::before {
+            content: '';
+            position: absolute;
+            left: ($square-side-length - $symbol-line-width) / 2 - $square-inner-padding;
+            width: $symbol-line-width;
+            height: 100%;
+            background-color: map.get($colors, 'dark');
+          }
+
+          &::before {
+            transform: rotate(45deg);
+          }
+
+          &::after {
+            transform: rotate(-45deg);
+          }
+        }
+      }
+    }
+
+    .StatusBar {
+      display: flex;
+      flex-direction: column;
+      align-self: center;
+      align-items: center;
+      row-gap: 4px;
+      color: wheat;
+      width: ($square-side-length + $square-gap) * 3 - $square-gap;
+
+      .Status {
+        display: flex;
+        justify-content: center;
+        column-gap: 10px;
+        font-size: 2rem;
+
+        .Player {
+          text-transform: uppercase;
+
+          &_status_active {
+            border-bottom: 1px solid wheat;
+            margin-bottom: -1px;
+          }
+        }
+      }
+
+      .Timer {
+        font-size: 15px;
+
+        &-TimeValue {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+
+  .History {
+    grid-area: History;
+    justify-self: self-start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 14px;
+    min-width: 300px;
+    border: 1px solid wheat;
+
+    & h2 {
+      font-size: 1.5rem;
+      color: wheat;
+      border-bottom: 1px solid wheat;
+    }
+
+    .MoveList {
+      color: wheat;
+    }
+  }
+}

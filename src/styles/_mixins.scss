@@ -1,0 +1,4 @@
+@mixin page-wrapper($side-padding: 40px) {
+  padding-left: $side-padding;
+  padding-right: $side-padding;
+}

@@ -1,0 +1,54 @@
+@use 'sass:map';
+$base: '200';
+$variant: '700';
+
+$primary-colors: (
+  '200': #bb86fc,
+  '400': #7f39fb,
+  '700': #3700b3,
+);
+
+$secondary-colors: (
+  '200': #03dac5,
+  '700': #018786,
+);
+
+$dark: #121212;
+
+$bg: #1f1f1f;
+
+$colors: (
+  'primary':
+    map-get(
+      $map: $primary-colors,
+      $key: $base,
+    ),
+  'primary-variant':
+    map-get(
+      $map: $primary-colors,
+      $key: $variant,
+    ),
+  'secondary':
+    map-get(
+      $map: $secondary-colors,
+      $key: $base,
+    ),
+  'secondary-variant':
+    map-get(
+      $map: $secondary-colors,
+      $key: $variant,
+    ),
+  'error': #cf6679,
+  'dark': $dark,
+  'background': rgba($dark, 0.9),
+);
+
+$padding: (
+  'xs': 4px,
+  'sm': 10px,
+  'md': 20px,
+  'lg': 40px,
+  'xl': 60px,
+);
+
+$header-height: 40px;
