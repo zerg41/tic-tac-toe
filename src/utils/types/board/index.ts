@@ -1,4 +1,4 @@
-import { SymbolSign } from 'types/common';
+import { SymbolSign } from '../common';
 
 type BoardSize = 3 | 4 | 5;
 type BoardState = ISquare[];

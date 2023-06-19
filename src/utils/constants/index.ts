@@ -1,4 +1,4 @@
-import { IBoard } from 'types';
+import { IBoard } from 'utils/types';
 
 export const GAME_NAME = 'Tic Tac Toe';
 export const DEFAULT_PLAYER_NAME = 'anonymous';

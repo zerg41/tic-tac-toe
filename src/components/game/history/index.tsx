@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 // utils
-import { IBoard, IGame } from 'types';
+import type { IBoard, IGame } from 'utils/types';
 
 type HistoryProps = {
   history: IGame['history'];
@@ -13,13 +13,13 @@ const History: FC<HistoryProps> = ({ history, players, squares, onMoveBack }) =>
   let movesList = Object.keys(history).map((moveKey) => {
     let moveNumber = Number(moveKey);
 
-    let squareInfo = `col: ${
+    let squareInfo = `col-row: ${
       squares[history[moveNumber].move.squareId].position.colIndex + 1
-    } - row: ${squares[history[moveNumber].move.squareId].position.rowIndex + 1}`;
+    } - ${squares[history[moveNumber].move.squareId].position.rowIndex + 1}`;
 
     let playerInfo = players[history[moveNumber].move.playerId].name;
 
-    let description = `Move #${moveNumber}: ${squareInfo} ${playerInfo}`;
+    let description = `Move #${moveNumber}: [${squareInfo}] by ${playerInfo}`;
 
     function handleMoveBack() {
       onMoveBack(moveNumber);
@@ -27,7 +27,7 @@ const History: FC<HistoryProps> = ({ history, players, squares, onMoveBack }) =>
 
     return (
       <li key={moveNumber} className='MoveList-Item'>
-        <button style={{ width: '300px' }} onClick={handleMoveBack}>
+        <button style={{ width: '300px', textAlign: 'start' }} onClick={handleMoveBack}>
           {description}
         </button>
       </li>

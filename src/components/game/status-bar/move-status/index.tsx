@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 // utils
-import { EGameEvent, IGame, IPlayer } from 'types';
+import { EGameEvent, IGame, IPlayer } from 'utils/types';
 
 type MoveStatusProps = {
   situation: IGame['situation'];

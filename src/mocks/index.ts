@@ -1,4 +1,4 @@
-import { IGame, IPlayerOne, IPlayerTwo, IUser } from 'types';
+import { IGame, IPlayerOne, IPlayerTwo, IUser } from 'utils/types';
 import { DEFAULT_BOARD_SIZE, FIRST_PLAYER_ID, SECOND_PLAYER_ID } from 'utils/constants';
 
 export const mockUserOne: IUser = { id: 100, name: 'John Doe' };

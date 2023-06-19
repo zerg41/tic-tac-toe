@@ -1,5 +1,5 @@
-import { IBoard, ISquare } from 'types/board';
-import { IPlayer, IPlayerOne, IPlayerTwo } from 'types/player';
+import { IBoard, ISquare } from '../board';
+import { IPlayer, IPlayerOne, IPlayerTwo } from '../player';
 
 export enum EGameEvent {
   Win = 'WIN',

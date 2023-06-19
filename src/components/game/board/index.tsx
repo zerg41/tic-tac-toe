@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 // components
 import Square from './square';
 // utils
-import type { IBoard, ISquare } from 'types';
+import type { IBoard, ISquare } from 'utils/types';
 
 type BoardProps = {
   size: IBoard['size'];

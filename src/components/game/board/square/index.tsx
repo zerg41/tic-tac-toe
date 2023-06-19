@@ -2,7 +2,7 @@ import { FC } from 'react';
 // components
 import { Symbol } from 'components';
 // utils
-import type { ISquare } from 'types';
+import type { ISquare } from 'utils/types';
 
 type SquareProps = {
   id: ISquare['id'];

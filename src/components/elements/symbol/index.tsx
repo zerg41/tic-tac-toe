@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { SymbolSign } from 'types';
+import { SymbolSign } from 'utils/types';
 
 const SymbolClass = {
   x: 'Cross',

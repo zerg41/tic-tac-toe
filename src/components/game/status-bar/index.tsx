@@ -1,11 +1,11 @@
-import React, { FC, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 // hooks
 import useTimer from 'hooks';
 // components
 import Timer from './timer';
 import MoveStatus from './move-status';
 // utils
-import { EGameEvent, IGame, IPlayer } from 'types';
+import { EGameEvent, IGame, IPlayer } from 'utils/types';
 
 type StatusBarProps = {
   situation: IGame['situation'];

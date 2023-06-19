@@ -4,8 +4,8 @@ import StatusBar from './status-bar';
 import Board from './board';
 import History from './history';
 // utils
-import { FIRST_PLAYER_ID, INITIAL_MOVE_NUMBER, SECOND_PLAYER_ID } from 'utils/constants';
-import { EGameEvent, IBoard, IGame, IPlayer, ISquare } from 'types';
+import { FIRST_PLAYER_ID, SECOND_PLAYER_ID, INITIAL_MOVE_NUMBER } from 'utils/constants';
+import { EGameEvent, IBoard, IGame, IPlayer, ISquare } from 'utils/types';
 
 interface IWinState {
   rows: number[];

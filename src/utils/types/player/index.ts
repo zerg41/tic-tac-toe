@@ -1,5 +1,5 @@
-import { SymbolSign } from 'types/common';
-import { IUser } from 'types/user';
+import { SymbolSign } from '../common';
+import { IUser } from '../user';
 
 export type PlayerId = 1 | 2;
 
