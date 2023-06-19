@@ -1,9 +1,12 @@
 import { FC } from 'react';
+import { GAME_NAME } from 'utils/constants';
 
-export const Header: FC = () => {
+const Header: FC = () => {
   return (
-    <header className='Main-Header'>
-      <h1 className='main-header__title'>Tic Tac Toe</h1>
+    <header className='Header'>
+      <h1 className='Header__Title'>{GAME_NAME}</h1>
     </header>
   );
 };
+
+export default Header;

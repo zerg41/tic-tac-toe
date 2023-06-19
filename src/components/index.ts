@@ -1,3 +1,2 @@
-export * from '../layouts/header';
+export * from './elements';
 export { default } from './game';
-export * from './symbols';

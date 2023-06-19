@@ -1,4 +1,1 @@
-export enum ESymbol {
-  Cross = 'x',
-  Zero = 'o',
-}
+export type SymbolSign = 'x' | 'o';

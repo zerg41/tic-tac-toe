@@ -7,7 +7,7 @@ type MoveStatusProps = {
   players: IGame['players'];
   currentPlayer: IPlayer;
   moveNumber: number;
-  winner?: IPlayer;
+  winner: IPlayer | null;
 };
 
 const MoveStatus: FC<MoveStatusProps> = React.memo(

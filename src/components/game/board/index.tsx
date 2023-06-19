@@ -11,15 +11,11 @@ type BoardProps = {
 };
 
 const Board: FC<BoardProps> = ({ size, squares, onSelectSquare }) => {
-  function renderBoard(squares: IBoard['state']) {
-    return squares.map((square) => (
-      <Square key={square.id} id={square.id} value={square.occupation} onClick={onSelectSquare} />
-    ));
-  }
-
   return (
     <div className='Board' style={{ gridTemplateColumns: `repeat(${size}, 1fr)` }}>
-      {squares && renderBoard(squares)}
+      {squares.map((square) => (
+        <Square key={square.id} id={square.id} value={square.occupation} onClick={onSelectSquare} />
+      ))}
     </div>
   );
 };

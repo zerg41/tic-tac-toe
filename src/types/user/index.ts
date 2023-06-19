@@ -1,14 +1,10 @@
-enum EGender {
-  Male = 'male',
-  Female = 'female',
-  Other = 'other',
-}
-
+type UserId = string | number;
+type UserName = string;
 interface IUserStatistics {}
 
 export interface IUser {
-  id: React.Key;
-  name: string;
-  gender?: EGender;
+  id: UserId;
+  name: UserName;
+  gender?: 'male' | 'female' | 'other';
   statistics?: IUserStatistics;
 }

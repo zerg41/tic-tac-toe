@@ -1,29 +1,13 @@
-import React, { FC, useEffect, useLayoutEffect, useState } from 'react';
+import { FC, useLayoutEffect, useState } from 'react';
 // components
 import StatusBar from './status-bar';
 import Board from './board';
-// utils
-import { EGameEvent, IBoard, IGame, IPlayer, IPlayerOne, IPlayerTwo, ISquare } from 'types';
-import { ESymbol } from 'types/common';
 import History from './history';
+// utils
+import { FIRST_PLAYER_ID, INITIAL_MOVE_NUMBER, SECOND_PLAYER_ID } from 'utils/constants';
+import { EGameEvent, IBoard, IGame, IPlayer, ISquare } from 'types';
 
-const INITIAL_MOVE_NUMBER = 1;
-const DEFAULT_PLAYER_NAME = 'anonymous';
-const FIRST_PLAYER_ID: IPlayerOne['id'] = 1;
-const SECOND_PLAYER_ID: IPlayerTwo['id'] = 2;
-
-const defaultPlayerOne: IPlayerOne = {
-  id: FIRST_PLAYER_ID,
-  symbol: ESymbol.Cross,
-  name: DEFAULT_PLAYER_NAME,
-};
-const defaultPlayerTwo: IPlayerTwo = {
-  id: SECOND_PLAYER_ID,
-  symbol: ESymbol.Zero,
-  name: DEFAULT_PLAYER_NAME,
-};
-
-interface WinState {
+interface IWinState {
   rows: number[];
   cols: number[];
   diagonal: number;
@@ -32,13 +16,10 @@ interface WinState {
 
 type GameProps = {
   settings: IGame['settings'];
+  players: IGame['players'];
 };
 
-const Game: FC<GameProps> = ({ settings }) => {
-  const [players, setPlayers] = useState<IGame['players']>({
-    1: defaultPlayerOne,
-    2: defaultPlayerTwo,
-  });
+const Game: FC<GameProps> = ({ settings, players }) => {
   // GAME SESSION
   const [boardState, setBoardState] = useState<IBoard['state']>([]);
   const [history, setHistory] = useState<IGame['history']>({});
@@ -47,9 +28,9 @@ const Game: FC<GameProps> = ({ settings }) => {
   const [currentPlayerId, setCurrentPlayerId] = useState<keyof IGame['players']>(FIRST_PLAYER_ID);
   const [currentMoveNumber, setCurrentMoveNumber] = useState<number>(INITIAL_MOVE_NUMBER);
   const [isInHistoryState, setIsInHistoryState] = useState(false);
-  const [winner, setWinner] = useState<IPlayer>();
+  const [winner, setWinner] = useState<IPlayer | null>(null);
   // TEMP
-  const [winState, setWinState] = useState<WinState>({
+  const [winState, setWinState] = useState<IWinState>({
     rows: new Array(settings.boardSize).fill(0),
     cols: new Array(settings.boardSize).fill(0),
     diagonal: 0,
@@ -59,28 +40,11 @@ const Game: FC<GameProps> = ({ settings }) => {
   const nextMoveNumber = currentMoveNumber + 1;
 
   // Initialize Game
-  useEffect(() => {
-    const newBoard = createBoard(settings.boardSize);
-    const newPlayers = { ...players };
-    newPlayers[FIRST_PLAYER_ID].name = settings.playerNames[FIRST_PLAYER_ID];
-    newPlayers[SECOND_PLAYER_ID].name = settings.playerNames[SECOND_PLAYER_ID];
-
-    setBoardState(newBoard);
-
-    setPlayers(newPlayers);
-
-    setTimeout(() => {
-      setSituation(EGameEvent.Ongoing);
-    }, 3000);
+  useLayoutEffect(() => {
+    initializeGame();
 
     return () => {
-      setPlayers({ 1: defaultPlayerOne, 2: defaultPlayerTwo });
-      setBoardState([]);
-      setIsInHistoryState(false);
-      clearHistory();
-      setSituation(EGameEvent.Initializing);
-      setCurrentMoveNumber(INITIAL_MOVE_NUMBER);
-      setCurrentPlayerId(FIRST_PLAYER_ID);
+      restartGame();
     };
   }, []);
 
@@ -96,6 +60,56 @@ const Game: FC<GameProps> = ({ settings }) => {
       return;
     }
   }, [currentMoveNumber, winner]);
+
+  /* FUNCTIONS */
+  function initializeGame() {
+    const newBoard = createBoard(settings.boardSize);
+
+    setBoardState(newBoard);
+
+    setTimeout(() => {
+      setSituation(EGameEvent.Ongoing);
+    }, 3000);
+  }
+
+  function restartGame() {
+    setBoardState([]);
+    setIsInHistoryState(false);
+    clearHistory();
+    setSituation(EGameEvent.Initializing);
+    setCurrentMoveNumber(INITIAL_MOVE_NUMBER);
+    setCurrentPlayerId(FIRST_PLAYER_ID);
+    setWinner(null);
+    setWinState({
+      rows: new Array(settings.boardSize).fill(0),
+      cols: new Array(settings.boardSize).fill(0),
+      diagonal: 0,
+      antiDiagonal: 0,
+    });
+
+    initializeGame();
+  }
+
+  function createBoard(size: IBoard['size']) {
+    let newBoard: IBoard['state'] = [];
+    let squareId = 0;
+
+    [...new Array(size)].forEach((_, rowIndex) => {
+      [...new Array(size)].forEach((_, colIndex) => {
+        let newSquare: ISquare = {
+          id: squareId,
+          position: { rowIndex, colIndex },
+          occupation: null,
+          isWinning: false,
+        };
+
+        squareId++;
+        newBoard.push(newSquare);
+      });
+    });
+
+    return newBoard;
+  }
 
   function updateHistory(
     moveNumber: keyof IGame['history'],
@@ -182,7 +196,7 @@ const Game: FC<GameProps> = ({ settings }) => {
     );
   }
 
-  /* Handlers */
+  /* HANDLERS */
   function handleMove(selectedSquareId: ISquare['id']) {
     if (situation === EGameEvent.Ongoing) {
       if (isInHistoryState) {
@@ -231,6 +245,7 @@ const Game: FC<GameProps> = ({ settings }) => {
           players={players}
         />
         <Board size={settings.boardSize} squares={boardState} onSelectSquare={handleMove} />
+        {situation !== EGameEvent.Ongoing && <button onClick={restartGame}>Restart</button>}
       </div>
       <History
         history={history}
@@ -243,24 +258,3 @@ const Game: FC<GameProps> = ({ settings }) => {
 };
 
 export default Game;
-
-function createBoard(size: IBoard['size']) {
-  let newBoard: IBoard['state'] = [];
-  let squareId = 0;
-
-  [...new Array(size)].forEach((_, rowIndex) => {
-    [...new Array(size)].forEach((_, colIndex) => {
-      let newSquare: ISquare = {
-        id: squareId,
-        position: { rowIndex, colIndex },
-        occupation: null,
-        isWinning: false,
-      };
-
-      squareId++;
-      newBoard.push(newSquare);
-    });
-  });
-
-  return newBoard;
-}

@@ -12,7 +12,7 @@ type StatusBarProps = {
   players: IGame['players'];
   currentPlayer: IPlayer;
   moveNumber: number;
-  winner?: IPlayer;
+  winner: IPlayer | null;
 };
 
 const StatusBar: FC<StatusBarProps> = ({

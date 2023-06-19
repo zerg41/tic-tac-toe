@@ -28,18 +28,17 @@ interface IGamePlayers {
   2: IPlayerTwo;
 }
 
+export interface IGameSettings {
+  boardSize: IBoard['size'];
+}
+
 export interface IGame {
   situation: EGameEvent;
   history: IGameHistory;
 
   // STATIC
+  settings: IGameSettings;
   players: IGamePlayers;
   // TODO:
-  settings: IGameSettings;
   id?: number;
-}
-
-export interface IGameSettings {
-  boardSize: IBoard['size'];
-  playerNames: { 1: IPlayer['name']; 2: IPlayer['name'] };
 }

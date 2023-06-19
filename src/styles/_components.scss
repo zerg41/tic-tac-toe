@@ -3,25 +3,27 @@
 @import './variables';
 @import './mixins';
 
-.Main {
-  &-Header {
-    @include page-wrapper;
-    height: $header-height;
-    padding-top: map.get($padding, 'sm'); // 10px
-    padding-bottom: map.get($padding, 'sm'); // 10px
-    background-color: map.get($colors, 'dark');
-    color: wheat;
-    text-align: center;
-  }
+.Header {
+  @include page-wrapper;
+  height: $header-height;
+  padding-top: map.get($padding, 'sm'); // 10px
+  padding-bottom: map.get($padding, 'sm'); // 10px
+  background-color: map.get($colors, 'dark');
+  color: wheat;
+  text-align: center;
 
-  &-Content {
-    @include page-wrapper;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    align-items: center;
-    background-color: map.get($colors, 'background');
+  &__Title {
+    font-size: $big-font-size;
   }
+}
+
+.Content {
+  @include page-wrapper;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  background-color: map.get($colors, 'background');
 }
 
 $square-gap: 14px;

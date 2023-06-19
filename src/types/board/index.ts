@@ -1,4 +1,4 @@
-import { ESymbol } from 'types/common';
+import { SymbolSign } from 'types/common';
 
 type BoardSize = 3 | 4 | 5;
 type BoardState = ISquare[];
@@ -10,7 +10,7 @@ interface ISquarePosition {
 
 export interface ISquare {
   id: number;
-  occupation: ESymbol | null;
+  occupation: SymbolSign | null;
   position: ISquarePosition;
   isWinning?: boolean;
 }

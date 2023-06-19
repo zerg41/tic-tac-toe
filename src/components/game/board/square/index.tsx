@@ -1,7 +1,8 @@
-import { CrossSymbol, ZeroSymbol } from 'components/symbols';
-import React, { FC } from 'react';
-import { ISquare } from 'types';
-import { ESymbol } from 'types/common';
+import { FC } from 'react';
+// components
+import { Symbol } from 'components';
+// utils
+import type { ISquare } from 'types';
 
 type SquareProps = {
   id: ISquare['id'];
@@ -12,16 +13,14 @@ type SquareProps = {
 
 const Square: FC<SquareProps> = ({ id, value, isWinning, onClick }) => {
   function handleClick() {
-    if (value) {
-      return;
+    if (!value) {
+      onClick(id);
     }
-
-    onClick(id);
   }
 
   return (
     <button className='Square' onClick={handleClick}>
-      {value && { [ESymbol.Cross]: <CrossSymbol />, [ESymbol.Zero]: <ZeroSymbol /> }[value]}
+      {value && <Symbol sign={value} />}
     </button>
   );
 };
