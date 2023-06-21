@@ -1,3 +1,5 @@
+export * from './board';
+
 export function toTimeString(totalSeconds: number) {
   const FIRST_TWO_DIGITS_NUMBER = 10;
   const SECONDS_IN_MINUTE = 60;

@@ -7,12 +7,7 @@ interface ITimer {
   readonly reset: () => void;
 }
 
-type TimerHook = (initialSecond?: number) => {
-  readonly elapsedSeconds: number;
-  readonly start: () => void;
-  readonly stop: () => void;
-  readonly reset: () => void;
-};
+type TimerHook = (initialSecond?: number) => ITimer;
 
 const useTimer: TimerHook = (initialSecond = 0) => {
   let [elapsedSeconds, setElapsedSeconds] = useState(initialSecond);

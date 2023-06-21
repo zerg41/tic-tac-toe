@@ -9,4 +9,6 @@ export interface IPlayer {
   symbol: SymbolSign;
 }
 
+export type Winner = IPlayer['name'] | null;
+
 // TODO: IRegisteredUser, IUnregistredUser extends IUser...

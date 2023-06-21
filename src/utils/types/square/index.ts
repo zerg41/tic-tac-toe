@@ -5,7 +5,7 @@ interface ISquarePosition {
   rowIndex: number;
 }
 
-export type WinningPositions = [ISquarePosition, ISquarePosition, ISquarePosition];
+export type WinningPositions = [ISquarePosition, ISquarePosition, ISquarePosition] | null;
 
 export interface ISquare {
   id: number;

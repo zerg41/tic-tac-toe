@@ -1,31 +1,31 @@
 import React, { FC } from 'react';
 // utils
-import { EGameEvent, IGame, IPlayer } from 'utils/types';
+import type { ICurrentMoveState, IGame, IGamePlayers } from 'utils/types';
 
 type MoveStatusProps = {
-  situation: EGameEvent;
-  players: IGame['players'];
-  currentPlayer: IPlayer;
-  moveNumber: number;
-  winner: IPlayer | null;
+  situation: IGame['situation'];
+  players: IGamePlayers;
+  winner: IGame['winner'];
+  currentPlayerId: ICurrentMoveState['playerId'];
+  moveNumber: ICurrentMoveState['moveNumber'];
 };
 
 const MoveStatus: FC<MoveStatusProps> = React.memo(
-  ({ situation, currentPlayer, players, moveNumber, winner }) => {
+  ({ situation, currentPlayerId, players, moveNumber, winner }) => {
     let statusTitle: string;
 
     switch (situation) {
-      case EGameEvent.Initializing:
+      case 'INITIALIZING':
         statusTitle = 'Loading Game...';
         break;
-      case EGameEvent.Ongoing:
-        statusTitle = `${currentPlayer.symbol} Turn`;
+      case 'ONGOING':
+        statusTitle = `${players[currentPlayerId].symbol} Turn`;
         break;
-      case EGameEvent.Draw:
+      case 'DRAW':
         statusTitle = 'Draw!';
         break;
-      case EGameEvent.Win:
-        statusTitle = `${winner?.name} Win!`;
+      case 'WIN':
+        statusTitle = `${winner} Win!`;
         break;
     }
 
@@ -33,11 +33,11 @@ const MoveStatus: FC<MoveStatusProps> = React.memo(
       <>
         <div className='Move'>{`Move # ${moveNumber}`}</div>
         <div className='Status'>
-          {situation === EGameEvent.Ongoing ? (
+          {situation === 'ONGOING' ? (
             <>
               <div
                 className={`Player${
-                  currentPlayer.id === players['1'].id ? ' Player_status_active' : ''
+                  currentPlayerId === players['1'].id ? ' Player_status_active' : ''
                 }`}
               >
                 {players['1'].symbol}
@@ -45,7 +45,7 @@ const MoveStatus: FC<MoveStatusProps> = React.memo(
               vs
               <div
                 className={`Player${
-                  currentPlayer.id === players['2'].id ? ' Player_status_active' : ''
+                  currentPlayerId === players['2'].id ? ' Player_status_active' : ''
                 }`}
               >
                 {players['2'].symbol}

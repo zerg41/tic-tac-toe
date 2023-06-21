@@ -1,21 +1,21 @@
-import { IGame, IPlayerOne, IPlayerTwo, IUser } from 'utils/types';
-import { DEFAULT_BOARD_SIZE, FIRST_PLAYER_ID, SECOND_PLAYER_ID } from 'utils/constants';
+import { BOARD_SIZE } from 'utils/constants';
+import { IGameSettings, IPlayer, IUser } from 'utils/types';
 
 export const mockUserOne: IUser = { id: 100, name: 'John Doe' };
 export const mockUserTwo: IUser = { id: 101, name: 'Shawn Connery' };
 
-export const defaultGameSettings: IGame['settings'] = {
-  boardSize: DEFAULT_BOARD_SIZE,
+export const defaultGameSettings: IGameSettings = {
+  boardSize: BOARD_SIZE,
 };
 
-export const defaultPlayerOne: IPlayerOne = {
-  id: FIRST_PLAYER_ID,
+export const defaultPlayerOne: IPlayer = {
+  id: 1,
   symbol: 'x',
   name: mockUserOne.name,
 };
 
-export const defaultPlayerTwo: IPlayerTwo = {
-  id: SECOND_PLAYER_ID,
+export const defaultPlayerTwo: IPlayer = {
+  id: 2,
   symbol: 'o',
   name: mockUserTwo.name,
 };

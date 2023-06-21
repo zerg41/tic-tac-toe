@@ -7,10 +7,10 @@ import type { IBoard, ISquare } from 'utils/types';
 type BoardProps = {
   size: IBoard['size'];
   squares: IBoard['state'];
-  onSelectSquare: (selectedSquareId: ISquare['id']) => void;
+  onSquareClick: (id: ISquare['id']) => void;
 };
 
-const Board: FC<BoardProps> = ({ size, squares, onSelectSquare }) => {
+const Board: FC<BoardProps> = ({ size, squares, onSquareClick }) => {
   return (
     <div className='Board' style={{ gridTemplateColumns: `repeat(${size}, 1fr)` }}>
       {squares.map((square) => (
@@ -19,7 +19,7 @@ const Board: FC<BoardProps> = ({ size, squares, onSelectSquare }) => {
           id={square.id}
           value={square.value}
           isWinning={square.isWinning}
-          onClick={onSelectSquare}
+          onClick={onSquareClick}
         />
       ))}
     </div>

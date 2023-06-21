@@ -1,23 +1,23 @@
 import { FC, useEffect } from 'react';
 // hooks
-import useTimer from 'hooks';
+import { useTimer } from 'hooks';
 // components
 import Timer from './timer';
 import MoveStatus from './move-status';
 // utils
-import { EGameEvent, IGame, IPlayer } from 'utils/types';
+import { ICurrentMoveState, IGame, IGamePlayers } from 'utils/types';
 
 type StatusBarProps = {
-  situation: EGameEvent;
-  players: IGame['players'];
-  currentPlayer: IPlayer;
-  moveNumber: number;
-  winner: IPlayer | null;
+  situation: IGame['situation'];
+  players: IGamePlayers;
+  winner: IGame['winner'];
+  currentPlayerId: ICurrentMoveState['playerId'];
+  moveNumber: ICurrentMoveState['moveNumber'];
 };
 
 const StatusBar: FC<StatusBarProps> = ({
   situation,
-  currentPlayer,
+  currentPlayerId,
   players,
   winner,
   moveNumber,
@@ -25,12 +25,12 @@ const StatusBar: FC<StatusBarProps> = ({
   const timer = useTimer();
 
   useEffect(() => {
-    if (situation === EGameEvent.Ongoing) {
+    if (situation === 'ONGOING') {
       timer.start();
       return;
     }
 
-    if (situation === EGameEvent.Initializing) {
+    if (situation === 'INITIALIZING') {
       timer.reset();
     }
 
@@ -43,7 +43,7 @@ const StatusBar: FC<StatusBarProps> = ({
       <MoveStatus
         moveNumber={moveNumber}
         situation={situation}
-        currentPlayer={currentPlayer}
+        currentPlayerId={currentPlayerId}
         players={players}
         winner={winner}
       />

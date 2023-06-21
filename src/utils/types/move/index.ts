@@ -4,8 +4,8 @@ import { ISquare } from '../square';
 type MoveSituation = 'MAKE_CHOICE' | 'WAITING_OPPONENT';
 
 export interface IMove {
-  playerId: IPlayer['id'];
-  squareId: ISquare['id'];
+  player: IPlayer;
+  square: ISquare;
 }
 
 export interface ICurrentMoveState {

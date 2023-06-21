@@ -1,33 +1,29 @@
 import { FC } from 'react';
 // utils
-import type { IBoard, IGame, IMove } from 'utils/types';
+import type { IMove } from 'utils/types';
 
 type HistoryProps = {
   moves: IMove[];
-  players: IGame['players'];
-  squares: IBoard['state'];
-  onMoveBack: (moveNumber: number) => void;
+  onMoveListItemClick: (moveNumber: number) => void;
 };
 
-const History: FC<HistoryProps> = ({ moves, players, squares, onMoveBack }) => {
-  let movesList = moves.map(({ squareId, playerId }, index) => {
+const History: FC<HistoryProps> = ({ moves, onMoveListItemClick }) => {
+  let movesList = moves.map(({ square, player }, index) => {
     const moveNumber = index + 1;
 
-    const squareInfo = `col-row: ${squares[squareId].position.colIndex + 1} - ${
-      squares[squareId].position.rowIndex + 1
-    }`;
+    const squareInfo = `col-row: ${square.position.colIndex + 1} - ${square.position.rowIndex + 1}`;
 
-    const playerInfo = players[playerId].name;
+    const playerInfo = player.name;
 
-    const description = `Move #${index}: [${squareInfo}] by ${playerInfo}`;
+    const description = `Move #${moveNumber}: [${squareInfo}] by ${playerInfo}`;
 
-    function handleMoveBack() {
-      onMoveBack(moveNumber);
+    function handleClick() {
+      onMoveListItemClick(moveNumber);
     }
 
     return (
       <li key={moveNumber} className='MoveList-Item'>
-        <button style={{ width: '300px', textAlign: 'start' }} onClick={handleMoveBack}>
+        <button style={{ width: '300px', textAlign: 'start' }} onClick={handleClick}>
           {description}
         </button>
       </li>

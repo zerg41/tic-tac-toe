@@ -6,14 +6,16 @@ import type { ISquare } from 'utils/types';
 
 type SquareProps = {
   id: ISquare['id'];
-  value: ISquare['occupation'];
+  value: ISquare['value'];
   isWinning?: ISquare['isWinning'];
   onClick: (id: ISquare['id']) => void;
 };
 
 const Square: FC<SquareProps> = ({ id, value, isWinning, onClick }) => {
   function handleClick() {
-    if (!value) {
+    const isEmpty = !value;
+
+    if (isEmpty) {
       onClick(id);
     }
   }
