@@ -2,7 +2,7 @@ import { IBoard } from 'utils/types';
 
 export const GAME_NAME = 'Tic Tac Toe';
 export const DEFAULT_PLAYER_NAME = 'anonymous';
-export const DEFAULT_BOARD_SIZE: IBoard['size'] = 3;
+export const DEFAULT_BOARD_SIZE: IBoard['size'] = 4;
 
 export const INITIAL_MOVE_NUMBER = 1;
 

@@ -1,25 +1,25 @@
 import { FC } from 'react';
 // utils
-import type { IBoard, IGame } from 'utils/types';
+import type { IBoard, IGame, IMove } from 'utils/types';
 
 type HistoryProps = {
-  history: IGame['history'];
+  moves: IMove[];
   players: IGame['players'];
   squares: IBoard['state'];
   onMoveBack: (moveNumber: number) => void;
 };
 
-const History: FC<HistoryProps> = ({ history, players, squares, onMoveBack }) => {
-  let movesList = Object.keys(history).map((moveKey) => {
-    let moveNumber = Number(moveKey);
+const History: FC<HistoryProps> = ({ moves, players, squares, onMoveBack }) => {
+  let movesList = moves.map(({ squareId, playerId }, index) => {
+    const moveNumber = index + 1;
 
-    let squareInfo = `col-row: ${
-      squares[history[moveNumber].move.squareId].position.colIndex + 1
-    } - ${squares[history[moveNumber].move.squareId].position.rowIndex + 1}`;
+    const squareInfo = `col-row: ${squares[squareId].position.colIndex + 1} - ${
+      squares[squareId].position.rowIndex + 1
+    }`;
 
-    let playerInfo = players[history[moveNumber].move.playerId].name;
+    const playerInfo = players[playerId].name;
 
-    let description = `Move #${moveNumber}: [${squareInfo}] by ${playerInfo}`;
+    const description = `Move #${index}: [${squareInfo}] by ${playerInfo}`;
 
     function handleMoveBack() {
       onMoveBack(moveNumber);

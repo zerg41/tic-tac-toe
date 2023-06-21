@@ -14,13 +14,18 @@ export enum EGameEvent {
 //   Finished,
 // }
 
+interface IWinState {
+  rows: number[];
+  cols: number[];
+  diagonal: number;
+  antiDiagonal: number;
+  winner: IPlayer | null;
+  winningLines: ISquare['position'][];
+}
+
 export interface IMove {
   playerId: IPlayer['id'];
   squareId: ISquare['id'];
-}
-
-interface IGameHistory {
-  [moveNumber: number]: { move: IMove; boardSnapshot: IBoard['state'] };
 }
 
 interface IGamePlayers {
@@ -28,12 +33,25 @@ interface IGamePlayers {
   2: IPlayerTwo;
 }
 
-export interface IGameSettings {
+interface IGameSettings {
   boardSize: IBoard['size'];
 }
 
-export interface IGame {
+interface IGameState {
   situation: EGameEvent;
+  boardState: IBoard['state'];
+  winState: IWinState;
+  moves: IMove[];
+  currentPlayerId: IPlayer['id'];
+  currentMoveNumber: number;
+}
+
+interface IGameHistory {
+  [moveNumber: number]: IGameState;
+}
+
+export interface IGame {
+  state: IGameState;
   history: IGameHistory;
 
   // STATIC

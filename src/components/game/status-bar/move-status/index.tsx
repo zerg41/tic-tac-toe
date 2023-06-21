@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { EGameEvent, IGame, IPlayer } from 'utils/types';
 
 type MoveStatusProps = {
-  situation: IGame['situation'];
+  situation: EGameEvent;
   players: IGame['players'];
   currentPlayer: IPlayer;
   moveNumber: number;

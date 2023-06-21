@@ -14,7 +14,13 @@ const Board: FC<BoardProps> = ({ size, squares, onSelectSquare }) => {
   return (
     <div className='Board' style={{ gridTemplateColumns: `repeat(${size}, 1fr)` }}>
       {squares.map((square) => (
-        <Square key={square.id} id={square.id} value={square.occupation} onClick={onSelectSquare} />
+        <Square
+          key={square.id}
+          id={square.id}
+          value={square.occupation}
+          isWinning={square.isWinning}
+          onClick={onSelectSquare}
+        />
       ))}
     </div>
   );

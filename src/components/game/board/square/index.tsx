@@ -19,7 +19,7 @@ const Square: FC<SquareProps> = ({ id, value, isWinning, onClick }) => {
   }
 
   return (
-    <button className='Square' onClick={handleClick}>
+    <button className={`Square ${isWinning ? 'Square_status_winner' : ''}`} onClick={handleClick}>
       {value && <Symbol sign={value} />}
     </button>
   );

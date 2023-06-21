@@ -63,7 +63,8 @@ $symbol-line-width: 6px;
         cursor: pointer;
 
         &:hover {
-          outline: 4px solid map.get($colors, 'primary');
+          // outline: 4px solid map.get($colors, 'primary');
+          outline: 4px solid wheat;
         }
 
         &:active {
