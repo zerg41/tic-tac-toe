@@ -1,59 +1,41 @@
-import { IBoard, ISquare } from '../board';
-import { IPlayer, IPlayerOne, IPlayerTwo } from '../player';
+import { IBoard } from '../board';
+import { WinningPositions } from '../square';
+import { IPlayer } from '../player';
+import { ICurrentMoveState, IMove } from '../move';
 
-export enum EGameEvent {
-  Win = 'WIN',
-  Draw = 'DRAW',
-  Ongoing = 'ONGOING',
-  Initializing = 'INITIALIZING',
-}
-
-// export enum EMoveEvent {
-//   MakeChoice,
-//   WaitingOpponent,
-//   Finished,
-// }
-
-interface IWinState {
-  rows: number[];
-  cols: number[];
-  diagonal: number;
-  antiDiagonal: number;
-  winner: IPlayer | null;
-  winningLines: ISquare['position'][];
-}
-
-export interface IMove {
-  playerId: IPlayer['id'];
-  squareId: ISquare['id'];
-}
-
-interface IGamePlayers {
-  1: IPlayerOne;
-  2: IPlayerTwo;
-}
-
-interface IGameSettings {
-  boardSize: IBoard['size'];
-}
+type GameSituation = 'WIN' | 'DRAW' | 'ONGOING' | 'INITIALIZING';
 
 interface IGameState {
-  situation: EGameEvent;
+  currentMoveState: ICurrentMoveState;
+  moveHistory: IMove[];
   boardState: IBoard['state'];
-  winState: IWinState;
-  moves: IMove[];
-  currentPlayerId: IPlayer['id'];
-  currentMoveNumber: number;
+  points: {
+    rows: number[];
+    cols: number[];
+    diagonal: number;
+    antiDiagonal: number;
+  };
 }
 
 interface IGameHistory {
   [moveNumber: number]: IGameState;
 }
 
+interface IGameSettings {
+  boardSize: IBoard['size'];
+}
+
+interface IGamePlayers {
+  1: IPlayer;
+  2: IPlayer;
+}
+
 export interface IGame {
   state: IGameState;
   history: IGameHistory;
-
+  situation: GameSituation;
+  winner: IPlayer['name'] | null;
+  winningPositions: WinningPositions | null;
   // STATIC
   settings: IGameSettings;
   players: IGamePlayers;

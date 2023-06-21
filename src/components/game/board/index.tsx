@@ -17,7 +17,7 @@ const Board: FC<BoardProps> = ({ size, squares, onSelectSquare }) => {
         <Square
           key={square.id}
           id={square.id}
-          value={square.occupation}
+          value={square.value}
           isWinning={square.isWinning}
           onClick={onSelectSquare}
         />
